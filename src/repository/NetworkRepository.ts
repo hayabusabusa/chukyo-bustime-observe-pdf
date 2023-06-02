@@ -32,7 +32,10 @@ export class NetworkRepository implements INetworkRepository {
   }
 
   async convertPDFToPNG(rawPDFData: Buffer): Promise<Buffer> {
-    const url = "";
+    const url = process.env.CLOUD_RUN_API_URL;
+
+    if (url == null) throw Error(`URL [${url}] is invalid`);
+
     const data = {
       encoded: rawPDFData.toString("base64")
     };
