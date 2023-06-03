@@ -39,6 +39,7 @@ jobs:
         git commit -m "chore: add diff"
         git push origin issue
     - name: Create PR
-      run: gh pr create --fill -B main
+      if: ${{ steps.check_pr.outputs.count == 0 }}
+      run: gh pr create -B main -t 'PR タイトル'
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
