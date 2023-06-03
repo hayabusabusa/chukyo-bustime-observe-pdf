@@ -31,7 +31,8 @@ jobs:
       run: npm run start
     - name: Push commit
       run: |
-        git status
+        git config user.name github-actions
+        git config user.email github-actions@github.com
         git branch issue
         git checkout issue
         git add .
