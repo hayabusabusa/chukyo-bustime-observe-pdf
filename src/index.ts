@@ -1,5 +1,13 @@
 import * as dotenv from "dotenv";
 
-dotenv.config();
+import { LocalStorageRepository } from "./repository";
 
-console.log("Hello");
+async function main() {
+  dotenv.config();
+
+  const repository = new LocalStorageRepository();
+  const buffer = Buffer.from("sample");
+  await repository.save("sample.txt", buffer);
+}
+
+main();
