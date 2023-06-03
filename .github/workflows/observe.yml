@@ -16,7 +16,7 @@ jobs:
       with:
         node-version: "18"
         cache: 'npm'
-    - name: Cache node-modules
+    - name: Cache nodd_modules
       uses: actions/cache@v3
       id: node_modules_cache_id
       env:
@@ -27,4 +27,17 @@ jobs:
     - name: Install npm modules if needed
       if: ${{ steps.node_modules_cache_id.outputs.cache-hit != 'true' }}
       run: npm install
-    - run: npm run start
+    - name: Run script
+      run: npm run start
+    - name: Push commit
+      run: |
+        git status
+        git branch issue
+        git checkout issue
+        git add .
+        git commit -m "chore: add diff"
+        git push origin issue
+    - name: Create PR
+      run: gh pr create --fill -B main
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
