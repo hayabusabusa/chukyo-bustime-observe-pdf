@@ -40,6 +40,6 @@ jobs:
         git push origin issue
     - name: Create PR
       if: ${{ steps.check_pr.outputs.count == 0 }}
-      run: gh pr create -B main -t 'PR タイトル' --b '内容'
+      run: gh pr create -B main -t 'PR タイトル' -b '内容'
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
