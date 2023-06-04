@@ -3,6 +3,7 @@ import {
   INetworkRepository, 
   IPixelmatchRepository 
 } from "../repository";
+import { PDFSize } from "../types";
 
 export class ObservePDFUseCase {
   constructor(
@@ -23,5 +24,17 @@ export class ObservePDFUseCase {
       await this.localStorageRepository.save(cachedOriginalPNGPath, originalPNG)
       return
     }
+
+    const cachedOriginalPNG = await this.localStorageRepository.load(cachedOriginalPNGPath);
+    const pixelmatchResponse = this.pixelmatchRepository.match(cachedOriginalPNG, originalPNG, { width: PDFSize.pdf.width, height: PDFSize.pdf.height });
+
+    // 画像が一致していて差分がない場合はそのまま終了.
+    if (pixelmatchResponse.isMatched) {
+      return
+    }
+
+    // 差分の画像を追加して終了.
+    const differencePNGPath = "./resource/diff.png";
+    await this.localStorageRepository.save(differencePNGPath, pixelmatchResponse.differencePNG);
   }
 }
