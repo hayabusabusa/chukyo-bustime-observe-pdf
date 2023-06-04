@@ -57,6 +57,6 @@ jobs:
           git add .
           git commit -m "chore: [bot] 画像の差分を追加"
           git push origin ${{ steps.date.outputs.date }}
-          gh pr create -B main -t '${{ steps.date.outputs.date }} 画像に差分が発生' -b '## 差分<br>| diff |<br>| :-: |<br>| ![diff](https://raw.githubusercontent.com/hayabusabusa/chukyo-bustime-observe-pdf/${{ github.sha }}/sample.txt) |'
+          gh pr create -B main -t '${{ steps.date.outputs.date }} 画像に差分が発生' -b ''
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
