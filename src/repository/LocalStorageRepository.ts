@@ -5,6 +5,12 @@ import * as fs from 'fs';
  */
 export interface ILocalStorageRepository {
     /**
+     * 指定されたローカルパスが存在するかどうかを確認する.
+     * @param path ローカルファイル、フォルダのパス.
+     */
+    isExists(path: string): boolean
+
+    /**
      * 指定されたローカルパスにバイナリデータを保存する.
      * @param path ファイル名込みのパス.
      * @param data バイナリデータ.
@@ -29,6 +35,10 @@ export interface ILocalStorageRepository {
  * ローカルにデータを保存する処理をまとめた Repository.
  */
 export class LocalStorageRepository implements ILocalStorageRepository {
+    isExists(path: string): boolean {
+        return fs.existsSync(path);
+    }
+
     async save(path: string, data: Buffer): Promise<void> {
         return new Promise<void>((resolve, reject) => {
             fs.writeFile(path, data, (error) => {

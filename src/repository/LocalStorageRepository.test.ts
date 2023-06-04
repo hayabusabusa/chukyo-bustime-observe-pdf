@@ -10,7 +10,7 @@ describe("基本的なファイル操作の確認", () => {
     const buffer = Buffer.from("test");
     await repository.save(path, buffer);
   
-    expect(fs.existsSync(path)).toBe(true);
+    expect(repository.isExists(path)).toBe(true);
   });
 
   test("ファイルの読み込みができること", async () => {
@@ -33,6 +33,6 @@ describe("基本的なファイル操作の確認", () => {
     await repository.save(path, buffer);
     await repository.unlinkAll([path]);
 
-    expect(fs.existsSync(path)).toBe(false);
+    expect(repository.isExists(path)).toBe(false);
   });
 });
