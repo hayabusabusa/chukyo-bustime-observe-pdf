@@ -54,6 +54,7 @@ jobs:
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git branch ${{ steps.date.outputs.date }}
           git checkout ${{ steps.date.outputs.date }}
+          git add .
           git commit -m "chore: [bot] 画像の差分を追加"
           git push origin ${{ steps.date.outputs.date }}
           gh pr create -B main -t '${{ steps.date.outputs.date }} 画像に差分が発生' -b '内容\n内容'
