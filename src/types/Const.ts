@@ -3,10 +3,11 @@ export const URLs = {
   timeTable: "https://www.chukyo-u.ac.jp/support/pdf/studentlife/bustime.pdf",
 };
 
+// 1241 × 1755
 export const PDFSize = {
   pdf: {
-    width: 594,
-    height: 841
+    width: 1241,
+    height: 1755
   },
   timeTable: {
     width: 728,
