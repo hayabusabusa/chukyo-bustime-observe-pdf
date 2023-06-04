@@ -31,6 +31,11 @@ jobs:
         if: ${{ steps.node_modules_cache_id.outputs.cache-hit != 'true' }}
         run: npm install
 
+      - name: Decode dotenv file
+        run: |
+          echo "${{ secrets.DOT_ENV_BASE64 }}" > .env-base64.txt
+          base64 --decode .env-base64.txt > .env
+
       - name: Run script
         run: npm run start
 
