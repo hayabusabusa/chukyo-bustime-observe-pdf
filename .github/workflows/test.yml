@@ -20,7 +20,7 @@ jobs:
         node-version: "18"
         cache: 'npm'
 
-    - name: Cache nodd_modules
+    - name: Cache node_modules
       uses: actions/cache@v3
       id: node_modules_cache_id
       env:
