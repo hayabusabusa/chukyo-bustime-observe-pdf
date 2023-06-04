@@ -35,6 +35,7 @@ jobs:
         run: |
           echo "${{ secrets.DOT_ENV_BASE64 }}" > .env-base64.txt
           base64 --decode .env-base64.txt > .env
+          rm .env-base64.txt
 
       - name: Run script
         run: npm run start
