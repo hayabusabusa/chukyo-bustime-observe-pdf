@@ -56,6 +56,8 @@ jobs:
       - name: Check PR
         id: check_pr
         run: echo "count=$(gh pr list -B main -H ${{ github.ref_name }} --json 'id' -q '.[] | length')" >> $GITHUB_OUTPUT
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Push commit and create PR if needed
         if: ${{ steps.diff.outcome == 'failure' && steps.check_pr.outputs.count == '' }}
