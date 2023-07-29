@@ -9,6 +9,8 @@ import { PixelmatchResponse } from "../types";
 describe("基本動作の確認", () => {
   const mockOriginalPDF = Buffer.from("originalPDF");
   const mockOriginalPNG = Buffer.from("originalPNG");
+  const mockUpdatedPDF = Buffer.from("updatedPDF");
+  const mockUpdatedPNG = Buffer.from("updatedPNG");
   const mockDiffPNG = Buffer.from("diffPNG");
 
   const differencePNGPath = "./resource/diff.png";
@@ -57,11 +59,11 @@ describe("基本動作の確認", () => {
     expect(localStorageRepository.isExists(differencePNGPath)).toBe(false);
   });
 
-  test("画像の差分が発生した場合は差分の画像ファイルが作成されること", async () => {
+  test("画像の差分が発生した場合はキャッシュした画像が更新されて差分の画像ファイルが作成されること", async () => {
     const localStorageRepository = new MockLocalStorageRepository({
       "./resource/original.png": mockOriginalPNG,
     });
-    const networkRepository = new MockNetworkRepository(mockOriginalPDF, mockOriginalPNG);
+    const networkRepository = new MockNetworkRepository(mockUpdatedPDF, mockUpdatedPNG);
     const pixelmatchRepository = new MockPixelmatchRepository({
       isMatched: false,
       missMatchPixels: 1,
@@ -76,7 +78,9 @@ describe("基本動作の確認", () => {
 
     await useCase.execute();
 
+    const updatedPNG = await localStorageRepository.load("./resource/original.png");
     expect(localStorageRepository.isExists(differencePNGPath)).toBe(true);
+    expect(updatedPNG.toString("utf-8")).toBe("updatedPNG");
   });
 });
 

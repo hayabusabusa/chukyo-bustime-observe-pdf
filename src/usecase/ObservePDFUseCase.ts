@@ -33,8 +33,9 @@ export class ObservePDFUseCase {
       return
     }
 
-    // 差分の画像を追加して終了.
+    // 新しい画像で上書きして、差分の画像を追加して終了.
     const differencePNGPath = "./resource/diff.png";
+    await this.localStorageRepository.save(cachedOriginalPNGPath, originalPNG);
     await this.localStorageRepository.save(differencePNGPath, pixelmatchResponse.differencePNG);
   }
 }
