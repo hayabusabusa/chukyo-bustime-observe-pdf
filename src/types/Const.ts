@@ -1,16 +1,16 @@
 export const URLs = {
-  pdf: "https://www.chukyo-u.ac.jp/support/pdf/studentlife/buscallender2023-2.pdf",
-  timeTable: "https://www.chukyo-u.ac.jp/support/pdf/studentlife/bustime.pdf",
+  pdf: "https://www.chukyo-u.ac.jp/support/pdf/studentlife/buscallender2024.pdf",
+  timeTable: "https://www.chukyo-u.ac.jp/support/pdf/studentlife/bustime240313.pdf",
 };
 
 // 1241 × 1755
 export const PDFSize = {
   pdf: {
-    width: 1241,
-    height: 1755
+    width: 595,
+    height: 842
   },
   timeTable: {
-    width: 728,
-    height: 1031
+    width: 841,
+    height: 1190
   }
 }
