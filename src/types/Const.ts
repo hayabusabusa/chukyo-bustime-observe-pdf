@@ -4,10 +4,10 @@ export const URLs = {
 };
 
 // 1241 × 1755
-export const PDFSize = {
-  pdf: {
-    width: 595,
-    height: 842
+export const PNGSize = {
+  calendar: {
+    width: 1240,
+    height: 1755
   },
   timeTable: {
     width: 841,
