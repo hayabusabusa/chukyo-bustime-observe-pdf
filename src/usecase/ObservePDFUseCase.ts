@@ -3,7 +3,7 @@ import {
   INetworkRepository, 
   IPixelmatchRepository 
 } from "../repository";
-import { PDFSize } from "../types";
+import { PNGSize } from "../types";
 
 export class ObservePDFUseCase {
   constructor(
@@ -26,7 +26,7 @@ export class ObservePDFUseCase {
     }
 
     const cachedOriginalPNG = await this.localStorageRepository.load(cachedOriginalPNGPath);
-    const pixelmatchResponse = this.pixelmatchRepository.match(cachedOriginalPNG, originalPNG, { width: PDFSize.pdf.width, height: PDFSize.pdf.height });
+    const pixelmatchResponse = this.pixelmatchRepository.match(cachedOriginalPNG, originalPNG, { width: PNGSize.calendar.width, height: PNGSize.calendar.height });
 
     // 画像が一致していて差分がない場合はそのまま終了.
     if (pixelmatchResponse.isMatched) {
