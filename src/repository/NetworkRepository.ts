@@ -1,15 +1,13 @@
 import axios from "axios";
 
-import { URLs } from "../types";
-
 /**
  * API などに通信を行う処理をまとめた Repository のインタフェース.
  */
 export interface INetworkRepository {
   /**
-   * 大学の運行カレンダーの PDF を取得する.
+   * URL に GET リクエストを行なって PDF のバイナリを取得する.
    */
-  fetchCalendarPDF(): Promise<Buffer>
+  fetchPDF(url: string): Promise<Buffer>
 
   /**
    * API を利用して PDF を PNG に変換する.
@@ -22,8 +20,7 @@ export interface INetworkRepository {
  * API などに通信を行う処理をまとめた Repository.
  */
 export class NetworkRepository implements INetworkRepository {
-  async fetchCalendarPDF(): Promise<Buffer> {
-    const url = URLs.pdf;
+  async fetchPDF(url: string): Promise<Buffer> {
     const response = await axios.get(url, { responseType: 'arraybuffer' })
 
     if (response.status !== 200) throw Error(`Axios GET request was failed to [${url}] status = ${response.status}`);
