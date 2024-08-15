@@ -117,7 +117,7 @@ class MockLocalStorageRepository implements ILocalStorageRepository {
 class MockNetworkRepository implements INetworkRepository {
   constructor(readonly pdf: Buffer, readonly png: Buffer) {}
 
-  fetchCalendarPDF(): Promise<Buffer> {
+  fetchPDF(url: string): Promise<Buffer> {
     return new Promise((resolved) => {
       resolved(this.pdf);
     });

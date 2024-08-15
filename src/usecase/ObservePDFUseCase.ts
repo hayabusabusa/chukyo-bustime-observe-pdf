@@ -3,7 +3,7 @@ import {
   INetworkRepository, 
   IPixelmatchRepository 
 } from "../repository";
-import { PNGSize } from "../types";
+import { PNGSize, URLs } from "../types";
 
 export class ObservePDFUseCase {
   constructor(
@@ -14,7 +14,7 @@ export class ObservePDFUseCase {
 
   async execute(): Promise<void> {
     // 運行カレンダーの PDF を PNG に変換.
-    const originalPDF = await this.networkRepository.fetchCalendarPDF();
+    const originalPDF = await this.networkRepository.fetchPDF(URLs.pdf);
     const originalPNG = await this.networkRepository.convertPDFToPNG(originalPDF);
 
     const cachedOriginalPNGPath = "./resource/original.png";
