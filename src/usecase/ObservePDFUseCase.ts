@@ -14,8 +14,9 @@ export class ObservePDFUseCase {
   ) {}
 
   async execute(): Promise<void> {
+    // 並列で実行すると Cloud Run 側に立てている API で不整合が発生するため直列で実行する.
     // 運行カレンダーの PDF の差分を確認.
-    const compareCalendarPDFPromise = this.comparePDF(
+    await this.comparePDF(
       URLs.pdf,
       "calendar",
       {
@@ -24,7 +25,7 @@ export class ObservePDFUseCase {
       }
     );
     // 時刻表の PDF の差分を確認.
-    const compareTimetablePDFPromise = this.comparePDF(
+    await this.comparePDF(
       URLs.timeTable, 
       "timetable",
       {
@@ -32,11 +33,6 @@ export class ObservePDFUseCase {
         height: PNGSize.timeTable.height
       }
     );
-
-    await Promise.all([
-      compareCalendarPDFPromise, 
-      compareTimetablePDFPromise
-    ]);
   }
 
   /**
