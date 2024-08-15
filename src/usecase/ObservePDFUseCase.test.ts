@@ -6,15 +6,15 @@ import {
 import { ObservePDFUseCase } from "../usecase";
 import { PixelmatchResponse } from "../types";
 
-describe("基本動作の確認", () => {
+describe("カレンダーの PDF 取得操作で基本動作の確認", () => {
   const mockOriginalPDF = Buffer.from("originalPDF");
   const mockOriginalPNG = Buffer.from("originalPNG");
   const mockUpdatedPDF = Buffer.from("updatedPDF");
   const mockUpdatedPNG = Buffer.from("updatedPNG");
   const mockDiffPNG = Buffer.from("diffPNG");
 
-  const differencePNGPath = "./resource/diff.png";
-  const cachedOriginalPNGPath = "./resource/original.png";
+  const differencePNGPath = "./resource/calendar_diff.png";
+  const cachedOriginalPNGPath = "./resource/calendar_original.png";
 
   test("キャッシュされたオリジナル画像が存在しない場合はオリジナル画像が追加されて終了すること", async () => {
     const localStorageRepository = new MockLocalStorageRepository({});
@@ -61,7 +61,7 @@ describe("基本動作の確認", () => {
 
   test("画像の差分が発生した場合はキャッシュした画像が更新されて差分の画像ファイルが作成されること", async () => {
     const localStorageRepository = new MockLocalStorageRepository({
-      "./resource/original.png": mockOriginalPNG,
+      "./resource/calendar_original.png": mockOriginalPNG,
     });
     const networkRepository = new MockNetworkRepository(mockUpdatedPDF, mockUpdatedPNG);
     const pixelmatchRepository = new MockPixelmatchRepository({
@@ -78,7 +78,7 @@ describe("基本動作の確認", () => {
 
     await useCase.execute();
 
-    const updatedPNG = await localStorageRepository.load("./resource/original.png");
+    const updatedPNG = await localStorageRepository.load("./resource/calendar_original.png");
     expect(localStorageRepository.isExists(differencePNGPath)).toBe(true);
     expect(updatedPNG.toString("utf-8")).toBe("updatedPNG");
   });
