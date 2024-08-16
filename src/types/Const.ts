@@ -1,6 +1,7 @@
 export const URLs = {
   pdf: "https://www.chukyo-u.ac.jp/support/pdf/studentlife/buscallender2024.pdf",
   timeTable: "https://www.chukyo-u.ac.jp/support/pdf/studentlife/bustime240425.pdf",
+  html: "https://www.chukyo-u.ac.jp/support/studentlife/a7.html"
 };
 
 // 1241 × 1755
