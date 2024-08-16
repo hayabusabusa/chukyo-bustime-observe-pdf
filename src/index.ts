@@ -1,22 +1,37 @@
 import * as dotenv from "dotenv";
 
-import { ObservePDFUseCase } from "./usecase";
+import { ObservePDFUseCase, ObserveURLUseCase } from "./usecase";
 import { 
   LocalStorageRepository, 
   NetworkRepository, 
-  PixelmatchRepository 
+  PixelmatchRepository,
+  ScrapingRepository,
 } from "./repository";
 
 async function main() {
   dotenv.config();
 
-  const useCase = new ObservePDFUseCase(
-    new LocalStorageRepository(),
-    new NetworkRepository(),
-    new PixelmatchRepository(),
+  const localStorageRepository = new LocalStorageRepository();
+  const networkRepository = new NetworkRepository();
+  const pixelmatchRepository = new PixelmatchRepository();
+  const scrapingRepository = new ScrapingRepository();
+
+  const observePDFUseCase = new ObservePDFUseCase(
+    localStorageRepository,
+    networkRepository,
+    pixelmatchRepository,
   );
 
-  await useCase.execute();
+  const observeURLUseCase = new ObserveURLUseCase(
+    localStorageRepository,
+    networkRepository,
+    scrapingRepository,
+  );
+
+  await Promise.all([
+    observePDFUseCase.execute(),
+    observeURLUseCase.execute(),
+  ]);
 }
 
 main();
