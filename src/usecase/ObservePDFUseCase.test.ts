@@ -123,6 +123,13 @@ class MockNetworkRepository implements INetworkRepository {
     });
   }
 
+  fetchHTML(url: string): Promise<string> {
+    return new Promise((resolved) => {
+      // 今回はテスト対象外なので空文字を返す.
+      resolved("");
+    });
+  }
+
   convertPDFToPNG(rawPDFData: Buffer): Promise<Buffer> {
     return new Promise((resolved) => {
       resolved(this.png);
