@@ -10,6 +10,12 @@ export interface INetworkRepository {
   fetchPDF(url: string): Promise<Buffer>
 
   /**
+   * URL に GET リクエストを行なって HTML を文字列で取得する.
+   * @param url 
+   */
+  fetchHTML(url: string): Promise<string>
+
+  /**
    * API を利用して PDF を PNG に変換する.
    * @param rawPDFData PDF のバイナリ. 
    */
@@ -26,6 +32,14 @@ export class NetworkRepository implements INetworkRepository {
     if (response.status !== 200) throw Error(`Axios GET request was failed to [${url}] status = ${response.status}`);
 
     return Buffer.from(response.data, 'binary');
+  }
+
+  async fetchHTML(url: string): Promise<string> {
+    const response = await axios.get(url);
+
+    if (response.status !== 200) throw Error(`Axios GET request was failed to [${url}] status = ${response.status}`);
+
+    return String(response.data);
   }
 
   async convertPDFToPNG(rawPDFData: Buffer): Promise<Buffer> {
