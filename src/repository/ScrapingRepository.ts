@@ -23,10 +23,14 @@ export class ScrapingRepository implements IScrapingRepository {
     const urls = Array.from(document.querySelectorAll(`a[class="pdf"]`))
       .map(element => element.getAttribute('href'))
       .filter((url): url is string => url != null);
+
+      // NOTE: `querySelectorAll` で `ul`　配下の `a class="pdf"` という要素を取得してくる.
+    const anchors = Array.from(document.querySelectorAll(`a[class="pdf"]`));
+    const calendarAnchor = anchors.find(anchor => anchor.textContent?.includes('スクールバス運行カレンダー'));
+    const timetableAnchor = anchors.find(anchor => anchor.textContent?.includes('スクールバス時刻表'));
     
-    const calendarPath = urls.find(url => url.includes('buscallender'));
-    // URL の配列から `bustime20240523` のような `bustime` で始まり、後ろに数値が続くものを取得する.
-    const timetablePath = urls.find(url => url.includes('bustime') && url.match(/bustime\d+/));
+    const calendarPath = calendarAnchor?.getAttribute('href');
+    const timetablePath = timetableAnchor?.getAttribute('href');
 
     if (calendarPath == null || timetablePath == null) {
       return undefined;
