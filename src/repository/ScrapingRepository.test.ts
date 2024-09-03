@@ -62,7 +62,7 @@ const html = `
               <li><a href="/support/pdf/studentlife/buscallender2024.pdf" target="_blank"
                   class="pdf">スクールバス運行カレンダー（2024年度）</a></li>
               <li><a href="/support/pdf/studentlife/bustime240425.pdf" target="_blank"
-                  class="pdf">【A'ダイヤ】祝日講義日及び【定期試験期間ダイヤ】4/25更新</a></li>
+                  class="pdf">スクールバス時刻表4/25更新</a></li>
               <li><a href="/support/pdf/studentlife/bustime-koudairenkei240905.pdf" target="_blank"
                   class="pdf">9月5日(木)高大連携学部授業のためのスクールバス時刻表</a></li>
               <li><a href="/support/pdf/studentlife/bustime-campus2024.pdf" target="_blank" class="pdf">キャンパス間連絡時刻表</a>
