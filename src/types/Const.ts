@@ -1,5 +1,5 @@
 export const URLs = {
-  pdf: "https://www.chukyo-u.ac.jp/support/pdf/studentlife/buscallender2024.pdf",
+  pdf: "https://www.chukyo-u.ac.jp/support/pdf/studentlife/buscallender2024-2.pdf",
   timeTable: "https://www.chukyo-u.ac.jp/support/pdf/studentlife/bustime.pdf",
   html: "https://www.chukyo-u.ac.jp/support/studentlife/a7.html"
 };
