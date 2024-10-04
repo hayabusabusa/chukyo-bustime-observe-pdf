@@ -7,7 +7,7 @@ export const URLs = {
 // 1241 × 1755
 export const PNGSize = {
   calendar: {
-    width: 1240,
+    width: 1241,
     height: 1755
   },
   timeTable: {
