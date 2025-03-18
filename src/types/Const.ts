@@ -1,5 +1,5 @@
 export const URLs = {
-  pdf: "https://www.chukyo-u.ac.jp/support/pdf/studentlife/buscallender2024-2.pdf",
+  pdf: "https://www.chukyo-u.ac.jp/support/pdf/studentlife/buscallender2025.pdf",
   timeTable: "https://www.chukyo-u.ac.jp/support/pdf/studentlife/bustime.pdf",
   html: "https://www.chukyo-u.ac.jp/support/studentlife/a7.html"
 };
@@ -8,7 +8,7 @@ export const URLs = {
 export const PNGSize = {
   calendar: {
     width: 1241,
-    height: 1755
+    height: 1754
   },
   timeTable: {
     width: 1755,
