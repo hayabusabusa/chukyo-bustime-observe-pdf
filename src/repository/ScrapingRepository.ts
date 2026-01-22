@@ -38,8 +38,17 @@ export class ScrapingRepository implements IScrapingRepository {
 
     // `href` からだとパスしか取れないので `https://www.chukyo-u.ac.jp` をつけて URL にする.
     return {
-      calendar: `https://www.chukyo-u.ac.jp${calendarPath}`,
-      timetable: `https://www.chukyo-u.ac.jp${timetablePath}`
+      calendar: `https://www.chukyo-u.ac.jp${this.resolveRelativePath(calendarPath)}`,
+      timetable: `https://www.chukyo-u.ac.jp${this.resolveRelativePath(timetablePath)}`
     };
+  }
+
+  /**
+   * 相対パス `../pdf/` を `/support/pdf/` に変換する
+   * @param path 相対パス
+   * @returns 変換後のパス
+   */
+  private resolveRelativePath(path: string): string {
+    return path.replace(/^\.\.\/pdf\//, '/support/pdf/');
   }
 }

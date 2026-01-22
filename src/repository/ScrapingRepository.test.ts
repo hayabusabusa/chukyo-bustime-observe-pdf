@@ -4,8 +4,8 @@ test('テスト用の html から必要な情報を抜き出せること', () =>
   const repository = new ScrapingRepository();
   const urls = repository.getURLs(html);
 
-  expect(urls?.calendar).toBe('https://www.chukyo-u.ac.jp/support/pdf/studentlife/buscallender2024.pdf');
-  expect(urls?.timetable).toBe('https://www.chukyo-u.ac.jp/support/pdf/studentlife/bustime240425.pdf');
+  expect(urls?.calendar).toBe('https://www.chukyo-u.ac.jp/support/pdf/studentlife/buscallender2025.pdf');
+  expect(urls?.timetable).toBe('https://www.chukyo-u.ac.jp/support/pdf/studentlife/bustime.pdf');
 });
 
 const html = `
@@ -59,9 +59,9 @@ const html = `
 
             <p class="text-center">豊田キャンパスと浄水駅を結ぶスクールバスは１日に70本運行されています。<br /> 浄水駅からは、10分位の乗車時間でキャンパスに到着します。</p>
             <ul>
-              <li><a href="/support/pdf/studentlife/buscallender2024.pdf" target="_blank"
+              <li><a href="../pdf/studentlife/buscallender2025.pdf" target="_blank"
                   class="pdf">スクールバス運行カレンダー（2024年度）</a></li>
-              <li><a href="/support/pdf/studentlife/bustime240425.pdf" target="_blank"
+              <li><a href="../pdf/studentlife/bustime.pdf" target="_blank"
                   class="pdf">スクールバス時刻表4/25更新</a></li>
               <li><a href="/support/pdf/studentlife/bustime-koudairenkei240905.pdf" target="_blank"
                   class="pdf">9月5日(木)高大連携学部授業のためのスクールバス時刻表</a></li>
