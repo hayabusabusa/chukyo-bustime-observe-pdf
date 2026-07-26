@@ -16,22 +16,21 @@ async function main() {
   const pixelmatchRepository = new PixelmatchRepository();
   const scrapingRepository = new ScrapingRepository();
 
-  const observePDFUseCase = new ObservePDFUseCase(
-    localStorageRepository,
-    networkRepository,
-    pixelmatchRepository,
-  );
-
   const observeURLUseCase = new ObserveURLUseCase(
     localStorageRepository,
     networkRepository,
     scrapingRepository,
   );
 
-  await Promise.all([
-    observePDFUseCase.execute(),
-    observeURLUseCase.execute(),
-  ]);
+  await observeURLUseCase.execute();
+
+  const observePDFUseCase = new ObservePDFUseCase(
+    localStorageRepository,
+    networkRepository,
+    pixelmatchRepository,
+  );
+
+  await observePDFUseCase.execute();
 }
 
 main();
