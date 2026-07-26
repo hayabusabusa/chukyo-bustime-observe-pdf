@@ -37,6 +37,8 @@ export class MockLocalStorageRepository implements ILocalStorageRepository {
 }
 
 export class MockNetworkRepository implements INetworkRepository {
+  readonly fetchedPDFURLs: string[] = [];
+
   constructor(
     readonly pdf: Buffer = Buffer.from(''),
     readonly png: Buffer = Buffer.from(''),
@@ -45,6 +47,7 @@ export class MockNetworkRepository implements INetworkRepository {
 
   fetchPDF(url: string): Promise<Buffer> {
     return new Promise((resolved) => {
+      this.fetchedPDFURLs.push(url);
       resolved(this.pdf);
     });
   }

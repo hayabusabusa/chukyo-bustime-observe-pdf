@@ -3,8 +3,7 @@ import {
   INetworkRepository, 
   IPixelmatchRepository 
 } from "../repository";
-
-import { PNGSize, URLs } from "../types";
+import { PNGSize, ScrapedURL } from "../types";
 
 export class ObservePDFUseCase {
   constructor(
@@ -14,10 +13,14 @@ export class ObservePDFUseCase {
   ) {}
 
   async execute(): Promise<void> {
+    const jsonPath = "./resource/urls.json";
+    const json = await this.localStorageRepository.load(jsonPath);
+    const urls = JSON.parse(json.toString("utf-8")) as ScrapedURL;
+
     // 並列で実行すると Cloud Run 側に立てている API で不整合が発生するため直列で実行する.
     // 運行カレンダーの PDF の差分を確認.
     await this.comparePDF(
-      URLs.pdf,
+      urls.calendar,
       "calendar",
       {
         width: PNGSize.calendar.width,
@@ -26,7 +29,7 @@ export class ObservePDFUseCase {
     );
     // 時刻表の PDF の差分を確認.
     await this.comparePDF(
-      URLs.timeTable, 
+      urls.timetable,
       "timetable",
       {
         width: PNGSize.timeTable.width,

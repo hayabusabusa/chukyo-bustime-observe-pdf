@@ -14,9 +14,17 @@ describe("カレンダーの PDF 取得操作で基本動作の確認", () => {
 
   const differencePNGPath = "./resource/calendar_diff.png";
   const cachedOriginalPNGPath = "./resource/calendar_original.png";
+  const jsonPath = "./resource/urls.json";
+  const urls = {
+    calendar: "https://example.com/calendar.pdf",
+    timetable: "https://example.com/timetable.pdf",
+  };
+  const urlsJSON = Buffer.from(JSON.stringify(urls));
 
   test("キャッシュされたオリジナル画像が存在しない場合はオリジナル画像が追加されて終了すること", async () => {
-    const localStorageRepository = new MockLocalStorageRepository({});
+    const localStorageRepository = new MockLocalStorageRepository({
+      [jsonPath]: urlsJSON,
+    });
     const networkRepository = new MockNetworkRepository(mockOriginalPDF, mockOriginalPNG);
     const pixelmatchRepository = new MockPixelmatchRepository({
       isMatched: true,
@@ -34,10 +42,15 @@ describe("カレンダーの PDF 取得操作で基本動作の確認", () => {
 
     expect(localStorageRepository.isExists(cachedOriginalPNGPath)).toBe(true);
     expect(localStorageRepository.isExists(differencePNGPath)).toBe(false);
+    expect(networkRepository.fetchedPDFURLs).toEqual([
+      urls.calendar,
+      urls.timetable,
+    ]);
   });
 
   test("画像の差分が存在しない場合は差分の画像ファイルが作成されないこと", async () => {
     const localStorageRepository = new MockLocalStorageRepository({
+      [jsonPath]: urlsJSON,
       "./resource/original.png": mockOriginalPNG,
     });
     const networkRepository = new MockNetworkRepository(mockOriginalPDF, mockOriginalPNG);
@@ -60,6 +73,7 @@ describe("カレンダーの PDF 取得操作で基本動作の確認", () => {
 
   test("画像の差分が発生した場合はキャッシュした画像が更新されて差分の画像ファイルが作成されること", async () => {
     const localStorageRepository = new MockLocalStorageRepository({
+      [jsonPath]: urlsJSON,
       "./resource/calendar_original.png": mockOriginalPNG,
     });
     const networkRepository = new MockNetworkRepository(mockUpdatedPDF, mockUpdatedPNG);
@@ -80,5 +94,43 @@ describe("カレンダーの PDF 取得操作で基本動作の確認", () => {
     const updatedPNG = await localStorageRepository.load("./resource/calendar_original.png");
     expect(localStorageRepository.isExists(differencePNGPath)).toBe(true);
     expect(updatedPNG.toString("utf-8")).toBe("updatedPNG");
+  });
+
+  test("urls.json が存在しない場合はエラーになること", async () => {
+    const localStorageRepository = new MockLocalStorageRepository({});
+    const networkRepository = new MockNetworkRepository();
+    const pixelmatchRepository = new MockPixelmatchRepository({
+      isMatched: true,
+      missMatchPixels: 0,
+      differencePNG: mockDiffPNG,
+    });
+    const useCase = new ObservePDFUseCase(
+      localStorageRepository,
+      networkRepository,
+      pixelmatchRepository,
+    );
+
+    await expect(useCase.execute()).rejects.toThrow();
+    expect(networkRepository.fetchedPDFURLs).toEqual([]);
+  });
+
+  test("urls.json が不正な JSON の場合はエラーになること", async () => {
+    const localStorageRepository = new MockLocalStorageRepository({
+      [jsonPath]: Buffer.from("invalid json"),
+    });
+    const networkRepository = new MockNetworkRepository();
+    const pixelmatchRepository = new MockPixelmatchRepository({
+      isMatched: true,
+      missMatchPixels: 0,
+      differencePNG: mockDiffPNG,
+    });
+    const useCase = new ObservePDFUseCase(
+      localStorageRepository,
+      networkRepository,
+      pixelmatchRepository,
+    );
+
+    await expect(useCase.execute()).rejects.toThrow(SyntaxError);
+    expect(networkRepository.fetchedPDFURLs).toEqual([]);
   });
 });
