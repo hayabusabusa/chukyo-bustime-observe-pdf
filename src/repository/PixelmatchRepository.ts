@@ -24,6 +24,15 @@ export class PixelmatchRepository implements IPixelmatchRepository {
     const lhs = PNG.sync.read(lhsBuffer);
     const rhs = PNG.sync.read(rhsBuffer);
 
+    if(
+      lhs.width !== size.width ||
+      lhs.height !== size.height ||
+      rhs.width !== size.width || 
+      rhs.height !== size.height
+    ) {
+      throw Error(`Image size mismatched L: ${lhs.height}x${lhs.width}, R: ${rhs.height}x${rhs.width}`);
+    }
+
     const diff = new PNG({ width: size.width, height: size.height });
     const missMatchPixels = Pixelmatch(lhs.data, rhs.data, diff.data, size.width, size.height);
 
